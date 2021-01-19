@@ -36,8 +36,7 @@ const rejectStyle = {
 const Upload = ({ tag }) => {
   const onDrop = useCallback(files => {
     const file = files[0]
-    const fileParts = file.name.split('.');
-    const name = fileParts[0];
+    const name = file.name
     const type = "image/png"
     axios.post(apiBaseURL + "/requestUploadURL", {
       name,
