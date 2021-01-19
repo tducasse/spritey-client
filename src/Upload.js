@@ -41,7 +41,7 @@ const Upload = ({ tag }) => {
         .post(apiBaseURL + "/requestUploadURL", {
           name,
           type,
-          tag: tag || "test",
+          tag,
         })
         .then((response) => {
           const signedRequest = response.data.uploadURL;
@@ -63,7 +63,7 @@ const Upload = ({ tag }) => {
     isDragActive,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ accept: "image/*", onDrop });
+  } = useDropzone({ accept: "image/png", onDrop });
 
   const style = useMemo(
     () => ({
@@ -78,8 +78,12 @@ const Upload = ({ tag }) => {
   return (
     <div className="container">
       <div {...getRootProps({ style })}>
-        <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <input {...getInputProps()} disabled={!tag} />
+        <p>
+          {!tag
+            ? "Enter the name of the challenge first"
+            : "Now drag and drop your stylesheet, or click here to select a file"}
+        </p>
       </div>
     </div>
   );
