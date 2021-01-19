@@ -3,6 +3,7 @@ import { useDropzone } from 'react-dropzone'
 import axios from 'axios'
 
 const apiBaseURL = "https://24pjv4vvf0.execute-api.us-east-1.amazonaws.com/dev"
+// const apiBaseURL = "http://localhost:3001/dev"
 
 const baseStyle = {
   flex: 1,
@@ -32,12 +33,12 @@ const rejectStyle = {
   borderColor: '#ff1744'
 };
 
-const Upload = ({tag}) => {
+const Upload = ({ tag }) => {
   const onDrop = useCallback(files => {
     const file = files[0]
     const fileParts = file.name.split('.');
     const name = fileParts[0];
-    const type = fileParts[1];
+    const type = "image/png"
     axios.post(apiBaseURL + "/requestUploadURL", {
       name,
       type,
