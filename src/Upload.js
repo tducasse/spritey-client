@@ -32,16 +32,16 @@ const rejectStyle = {
   borderColor: '#ff1744'
 };
 
-const Upload = () => {
+const Upload = ({tag}) => {
   const onDrop = useCallback(files => {
-
     const file = files[0]
     const fileParts = file.name.split('.');
     const name = fileParts[0];
     const type = fileParts[1];
     axios.post(apiBaseURL + "/requestUploadURL", {
-      name ,
-      type
+      name,
+      type,
+      tag: tag || 'test'
     })
       .then(response => {
         const signedRequest = response.data.uploadURL;
@@ -53,7 +53,7 @@ const Upload = () => {
         axios.put(signedRequest, file, options)
         return false;
       });
-  }, [])
+  }, [tag])
 
   const {
     getRootProps,
