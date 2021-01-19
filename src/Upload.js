@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import { useDropzone } from 'react-dropzone'
+import axios from 'axios'
 
 const apiBaseURL = "https://24pjv4vvf0.execute-api.us-east-1.amazonaws.com/dev"
 
@@ -33,32 +34,25 @@ const rejectStyle = {
 
 const Upload = () => {
   const onDrop = useCallback(files => {
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.addEventListener('loadend', () => {
-        fetch(apiBaseURL + "/requestUploadURL", {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            name: file.name,
-            type: file.type
-          })
-        })
-          .then((response) => {
-            return response.json();
-          })
-          .then((json) => {
-            return fetch(json.uploadURL, {
-              method: "PUT",
-              body: new Blob([reader.result], { type: file.type })
-            })
-          })
-      });
-      reader.readAsArrayBuffer(file);
+
+    let file = files[0]
+    let fileParts = file.name.split('.');
+    let fileName = fileParts[0];
+    let fileType = fileParts[1];
+    axios.post(apiBaseURL + "/requestUploadURL", {
+      fileName,
+      fileType
     })
-    return false;
+      .then(response => {
+        var signedRequest = response.data.uploadURL;
+        var options = {
+          headers: {
+            'Content-Type': fileType
+          }
+        };
+        axios.put(signedRequest, file, options)
+        return false;
+      });
   }, [])
 
   const {
