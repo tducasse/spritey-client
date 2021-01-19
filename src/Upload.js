@@ -35,19 +35,19 @@ const rejectStyle = {
 const Upload = () => {
   const onDrop = useCallback(files => {
 
-    let file = files[0]
-    let fileParts = file.name.split('.');
-    let fileName = fileParts[0];
-    let fileType = fileParts[1];
+    const file = files[0]
+    const fileParts = file.name.split('.');
+    const name = fileParts[0];
+    const type = fileParts[1];
     axios.post(apiBaseURL + "/requestUploadURL", {
-      fileName,
-      fileType
+      name ,
+      type
     })
       .then(response => {
-        var signedRequest = response.data.uploadURL;
-        var options = {
+        const signedRequest = response.data.uploadURL;
+        const options = {
           headers: {
-            'Content-Type': fileType
+            'Content-Type': type
           }
         };
         axios.put(signedRequest, file, options)
