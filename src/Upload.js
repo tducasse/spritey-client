@@ -1,79 +1,79 @@
-import React, { useCallback, useMemo } from 'react'
-import { useDropzone } from 'react-dropzone'
-import axios from 'axios'
-
-const apiBaseURL = "https://24pjv4vvf0.execute-api.us-east-1.amazonaws.com/dev"
-// const apiBaseURL = "http://localhost:3001/dev"
+import React, { useCallback, useMemo } from "react";
+import { useDropzone } from "react-dropzone";
+import axios from "axios";
+import { apiBaseURL } from "./constants";
 
 const baseStyle = {
   flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: '20px',
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  padding: "20px",
   borderWidth: 2,
   borderRadius: 2,
-  borderColor: '#eeeeee',
-  borderStyle: 'dashed',
-  backgroundColor: '#fafafa',
-  color: '#bdbdbd',
-  outline: 'none',
-  transition: 'border .24s ease-in-out'
+  borderColor: "#eeeeee",
+  borderStyle: "dashed",
+  backgroundColor: "#fafafa",
+  color: "#bdbdbd",
+  outline: "none",
+  transition: "border .24s ease-in-out",
 };
 
 const activeStyle = {
-  borderColor: '#2196f3'
+  borderColor: "#2196f3",
 };
 
 const acceptStyle = {
-  borderColor: '#00e676'
+  borderColor: "#00e676",
 };
 
 const rejectStyle = {
-  borderColor: '#ff1744'
+  borderColor: "#ff1744",
 };
 
 const Upload = ({ tag }) => {
-  const onDrop = useCallback(files => {
-    const file = files[0]
-    const name = file.name
-    const type = "image/png"
-    axios.post(apiBaseURL + "/requestUploadURL", {
-      name,
-      type,
-      tag: tag || 'test'
-    })
-      .then(response => {
-        const signedRequest = response.data.uploadURL;
-        const options = {
-          headers: {
-            'Content-Type': type
-          }
-        };
-        axios.put(signedRequest, file, options)
-        return false;
-      });
-  }, [tag])
+  const onDrop = useCallback(
+    (files) => {
+      const file = files[0];
+      const name = file.name;
+      const type = "image/png";
+      axios
+        .post(apiBaseURL + "/requestUploadURL", {
+          name,
+          type,
+          tag: tag || "test",
+        })
+        .then((response) => {
+          const signedRequest = response.data.uploadURL;
+          const options = {
+            headers: {
+              "Content-Type": type,
+            },
+          };
+          axios.put(signedRequest, file, options);
+          return false;
+        });
+    },
+    [tag]
+  );
 
   const {
     getRootProps,
     getInputProps,
     isDragActive,
     isDragAccept,
-    isDragReject
-  } = useDropzone({ accept: 'image/*', onDrop });
-
-
-  const style = useMemo(() => ({
-    ...baseStyle,
-    ...(isDragActive ? activeStyle : {}),
-    ...(isDragAccept ? acceptStyle : {}),
-    ...(isDragReject ? rejectStyle : {})
-  }), [
-    isDragActive,
     isDragReject,
-    isDragAccept
-  ]);
+  } = useDropzone({ accept: "image/*", onDrop });
+
+  const style = useMemo(
+    () => ({
+      ...baseStyle,
+      ...(isDragActive ? activeStyle : {}),
+      ...(isDragAccept ? acceptStyle : {}),
+      ...(isDragReject ? rejectStyle : {}),
+    }),
+    [isDragActive, isDragReject, isDragAccept]
+  );
 
   return (
     <div className="container">
@@ -83,5 +83,5 @@ const Upload = ({ tag }) => {
       </div>
     </div>
   );
-}
-export default Upload
+};
+export default Upload;
