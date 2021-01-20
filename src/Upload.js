@@ -1,7 +1,8 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import { apiBaseURL } from "./constants";
+import Sprite from "./Sprite";
 
 const baseStyle = {
   flex: 1,
@@ -31,7 +32,16 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-const Upload = ({ tag }) => {
+const Upload = ({ challenge }) => {
+  const [currentUpload, setCurrentUpload] = useState(null);
+  const [tag, setTag] = useState("");
+
+  useEffect(() => {
+    if (challenge) {
+      setTag(challenge.name);
+    }
+  }, [challenge]);
+
   const onDrop = useCallback(
     (files) => {
       const file = files[0];
@@ -50,7 +60,9 @@ const Upload = ({ tag }) => {
               "Content-Type": type,
             },
           };
-          axios.put(signedRequest, file, options);
+          axios
+            .put(signedRequest, file, options)
+            .then(() => setCurrentUpload(signedRequest.split("?")[0]));
           return false;
         });
     },
@@ -75,17 +87,33 @@ const Upload = ({ tag }) => {
     [isDragActive, isDragReject, isDragAccept]
   );
 
+  if (currentUpload) {
+    return (
+      <>
+        <h3>All good, it's uploaded!</h3>
+        <Sprite key={currentUpload} s3_path={currentUpload} />
+      </>
+    );
+  }
   return (
-    <div className="container">
-      <div {...getRootProps({ style })}>
-        <input {...getInputProps()} disabled={!tag} />
-        <p>
-          {!tag
-            ? "Enter the name of the challenge first"
-            : "Now drag and drop your stylesheet, or click here to select a file"}
-        </p>
+    <>
+      <ul>
+        <li>export the spritesheet as a png</li>
+        <li>with only 1 row</li>
+      </ul>
+      <label htmlFor="tag">Enter the name of the challenge here</label>
+      <input name="tag" onChange={(e) => setTag(e.target.value)} value={tag} />
+      <div className="container">
+        <div {...getRootProps({ style })}>
+          <input {...getInputProps()} disabled={!tag} />
+          <p>
+            {!tag
+              ? "Enter the name of the challenge first"
+              : "Now drag and drop your stylesheet, or click here to select a file"}
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 export default Upload;

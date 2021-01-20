@@ -9,7 +9,7 @@ const Tag = ({ tag }) => {
 
   const fetchSprites = useCallback(async () => {
     const response = await axios.get(apiBaseURL + "/getSprites/" + tag);
-    setImages(response.data.data.Items.map((el) => el.s3_path));
+    setImages(response.data.data.Items);
   }, [tag]);
 
   useEffect(() => {
@@ -21,7 +21,9 @@ const Tag = ({ tag }) => {
       <button onClick={() => setOpen(true)}>{tag}</button>
       <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
         {open &&
-          (images || []).map((image) => <Sprite key={image} src={image} />)}
+          (images || []).map((image) => (
+            <Sprite key={image.s3_path} {...image} />
+          ))}
       </div>
     </div>
   );
