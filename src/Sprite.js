@@ -87,7 +87,11 @@ const Sprite = ({ src }) => {
       />
       <div style={{ marginLeft: 24 }}>
         <Spritesheet
-          style={{ height: height * scale, width: width * scale }}
+          style={{
+            height: height * scale,
+            width: width * scale,
+            imageRendering: "pixelated",
+          }}
           key={`${frames}-${height}-${width}-${fps}-${scale}`}
           image={src}
           heightFrame={height}
