@@ -1,8 +1,11 @@
 import React from "react";
 
-const SettingItem = ({ setting }) => {
+const SettingItem = ({ setting, setDirty }) => {
   const [action, value, name] = setting;
-  const onChange = (e) => action(Number(e.target.value));
+  const onChange = (e) => {
+    setDirty();
+    action(Number(e.target.value));
+  };
   return (
     <>
       <label>{name}</label>
@@ -22,6 +25,7 @@ const Settings = ({
   fps,
   setScale,
   scale,
+  setDirty,
 }) => {
   const settings = [
     [setFrames, frames, "Number of frames"],
@@ -41,7 +45,7 @@ const Settings = ({
       }}
     >
       {settings.map((setting) => (
-        <SettingItem key={setting[2]} setting={setting} />
+        <SettingItem key={setting[2]} setting={setting} setDirty={setDirty} />
       ))}
     </div>
   );

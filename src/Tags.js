@@ -22,7 +22,7 @@ const Tag = ({ tag }) => {
       <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
         {open &&
           (images || []).map((image) => (
-            <Sprite key={image.s3_path} {...image} />
+            <Sprite key={image.s3_path} {...image} tag={tag} />
           ))}
       </div>
     </div>
