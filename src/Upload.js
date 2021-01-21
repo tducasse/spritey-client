@@ -91,7 +91,7 @@ const Upload = ({ challenge }) => {
     return (
       <>
         <h3>All good, it's uploaded!</h3>
-        <Sprite key={currentUpload} s3_path={currentUpload} />
+        <Sprite key={currentUpload} s3_path={currentUpload} tag={tag} />
       </>
     );
   }
