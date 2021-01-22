@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
-import { apiBaseURL } from "./constants";
+import { apiBaseURL } from "../utils/constants";
 import Sprite from "./Sprite";
 
 const baseStyle = {

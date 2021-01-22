@@ -1,18 +1,5 @@
 import React from "react";
-
-const SettingItem = ({ setting, setDirty }) => {
-  const [action, value, name] = setting;
-  const onChange = (e) => {
-    setDirty();
-    action(Number(e.target.value));
-  };
-  return (
-    <>
-      <label>{name}</label>
-      <input type="number" value={value} onChange={onChange} />
-    </>
-  );
-};
+import SettingsItem from "./SettingsItem";
 
 const Settings = ({
   setHeight,
@@ -45,7 +32,7 @@ const Settings = ({
       }}
     >
       {settings.map((setting) => (
-        <SettingItem key={setting[2]} setting={setting} setDirty={setDirty} />
+        <SettingsItem key={setting[2]} setting={setting} setDirty={setDirty} />
       ))}
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import Spritesheet from "react-responsive-spritesheet";
-import Settings from "./Settings";
+import Settings from "./Settings/Settings";
 import axios from "axios";
-import { apiBaseURL } from "./constants";
+import { apiBaseURL } from "../../utils/constants";
 
 const Sprite = ({
   width: initWidth,

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { apiBaseURL } from "./constants";
-import Sprite from "./Sprite";
+import { apiBaseURL } from "../../utils/constants";
+import Sprite from "../Sprite";
 
 const Tag = ({ tag }) => {
   const [open, setOpen] = useState(false);
@@ -29,14 +29,4 @@ const Tag = ({ tag }) => {
   );
 };
 
-const Tags = ({ tags }) => {
-  return (
-    <div style={{ padding: 12, flexDirection: "column", display: "flex" }}>
-      {(tags || []).map((tag) => (
-        <Tag key={tag} tag={tag} />
-      ))}
-    </div>
-  );
-};
-
-export default Tags;
+export default Tag;
