@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
-import { apiBaseURL } from "../utils/constants";
-import Sprite from "./Sprite";
+import { apiBaseURL } from "../../utils/constants";
+import Sprite from "../Sprite";
 
 const baseStyle = {
   flex: 1,
