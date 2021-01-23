@@ -3,6 +3,7 @@ import axios from "axios";
 import { apiBaseURL } from "../../utils/constants";
 import Sprite from "../Sprite";
 import styled from "styled-components";
+import { IoMdCube } from "react-icons/io";
 
 const Tag = ({ tag }) => {
   const [open, setOpen] = useState(false);
@@ -14,21 +15,41 @@ const Tag = ({ tag }) => {
   }, [tag]);
 
   useEffect(() => {
-    fetchSprites();
-  }, [fetchSprites]);
+    if (open) {
+      fetchSprites();
+    }
+  }, [open, fetchSprites]);
+
+  const toggleOpen = () => setOpen(!open);
 
   return (
-    <div>
-      <button onClick={() => setOpen(true)}>{tag}</button>
+    <>
+      <RowH3>
+        <IoMdCube />
+        &nbsp;{tag} (
+        <Underlined onClick={toggleOpen}>{open ? "Hide" : "Show"}</Underlined>)
+      </RowH3>
       <SpritesContainer>
         {open &&
           (images || []).map((image) => (
             <Sprite key={image.s3_path} {...image} tag={tag} />
           ))}
       </SpritesContainer>
-    </div>
+    </>
   );
 };
+
+const Underlined = styled.span`
+  text-decoration: underline;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+const RowH3 = styled.h3`
+  display: flex;
+  align-items: center;
+`;
 
 const SpritesContainer = styled.div`
   display: flex;

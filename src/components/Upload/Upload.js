@@ -101,15 +101,13 @@ const Upload = ({ challenge }) => {
         <li>export the spritesheet as a png</li>
         <li>with only 1 row</li>
       </ul>
-      <label htmlFor="tag">Enter the name of the challenge here</label>
-      <input name="tag" onChange={(e) => setTag(e.target.value)} value={tag} />
       <div className="container">
         <div {...getRootProps({ style })}>
           <input {...getInputProps()} disabled={!tag} />
           <p>
             {!tag
               ? "Enter the name of the challenge first"
-              : "Now drag and drop your stylesheet, or click here to select a file"}
+              : "Now drag and drop your spritesheet, or click here to select a file"}
           </p>
         </div>
       </div>

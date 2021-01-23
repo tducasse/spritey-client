@@ -3,7 +3,7 @@ import Pages from "./Pages";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "./utils/context";
 import { Auth } from "aws-amplify";
-import LogoutButton from "./components/LogoutButton";
+import Nav from "./components/Nav";
 
 const App = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(true);
@@ -34,7 +34,7 @@ const App = () => {
 
   return (
     <>
-      <LogoutButton isLoggedIn={isLoggedIn} logout={logout} />
+      <Nav isLoggedIn={isLoggedIn} logout={logout} />
       {!isLoggingIn && (
         <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
           <Pages />

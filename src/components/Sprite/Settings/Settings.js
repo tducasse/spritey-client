@@ -14,6 +14,8 @@ const Settings = ({
   setScale,
   scale,
   setDirty,
+  isDirty,
+  saveSettings,
 }) => {
   const settings = [
     [setFrames, frames, "Number of frames"],
@@ -22,11 +24,17 @@ const Settings = ({
     [setFps, fps, "FPS"],
     [setScale, scale, "Scale"],
   ];
+
   return (
     <SettingsContainer>
       {settings.map((setting) => (
         <SettingsItem key={setting[2]} setting={setting} setDirty={setDirty} />
       ))}
+      {isDirty && (
+        <div>
+          <button onClick={saveSettings}>Save</button>
+        </div>
+      )}
     </SettingsContainer>
   );
 };
@@ -35,7 +43,6 @@ const SettingsContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 12px;
-  border: 1px solid black;
   border-radius: 10px;
 `;
 

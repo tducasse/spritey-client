@@ -4,6 +4,9 @@ import Settings from "./Settings/Settings";
 import axios from "axios";
 import { apiBaseURL } from "../../utils/constants";
 import styled from "styled-components";
+import { VscSettingsGear } from "react-icons/vsc";
+import ReactModal from "react-modal";
+import { IoMdClose } from "react-icons/io";
 
 const Sprite = ({
   width: initWidth,
@@ -25,6 +28,7 @@ const Sprite = ({
   const [savedFps, setSavedFps] = useState(initFps || 12);
   const [savedScale, setSavedScale] = useState(initScale || 6);
   const [dirty, setDirty] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const saveSettings = useCallback(async () => {
     await axios.patch(apiBaseURL + "/updateSettings", {
@@ -51,59 +55,84 @@ const Sprite = ({
       scale !== savedScale ||
       fps !== savedFps);
 
+  ReactModal.setAppElement("#root");
+
+  const toggleOpen = () => setOpen(!open);
+
   return (
     <SpriteContainer>
-      <Settings
-        setHeight={setHeight}
-        height={height}
-        setWidth={setWidth}
-        width={width}
-        frames={frames}
-        setFrames={setFrames}
-        setFps={setFps}
+      <Spritesheet
+        style={{
+          height: height * scale,
+          width: width * scale,
+          imageRendering: "pixelated",
+        }}
+        key={`${frames}-${height}-${width}-${fps}-${scale}`}
+        image={src}
+        heightFrame={height}
+        widthFrame={width}
+        steps={frames}
         fps={fps}
-        scale={scale}
-        setScale={setScale}
-        setDirty={() => setDirty(true)}
+        autoplay
+        loop
       />
-      <SpritesheetContainer>
-        <Spritesheet
-          style={{
-            height: height * scale,
-            width: width * scale,
-            imageRendering: "pixelated",
-          }}
-          key={`${frames}-${height}-${width}-${fps}-${scale}`}
-          image={src}
-          heightFrame={height}
-          widthFrame={width}
-          steps={frames}
+      <VscSettingsGear onClick={toggleOpen} />
+      <ReactModal
+        isOpen={open}
+        contentLabel="Settings"
+        onRequestClose={toggleOpen}
+      >
+        <Row>
+          <h2>Settings</h2>
+          <BorderedIcon onClick={toggleOpen} />
+        </Row>
+        <Settings
+          setHeight={setHeight}
+          height={height}
+          setWidth={setWidth}
+          width={width}
+          frames={frames}
+          setFrames={setFrames}
+          setFps={setFps}
           fps={fps}
-          autoplay
-          loop
+          scale={scale}
+          setScale={setScale}
+          setDirty={() => setDirty(true)}
+          isDirty={isDirty}
+          saveSettings={saveSettings}
         />
-        {isDirty && (
-          <div>
-            <button onClick={saveSettings}>Save</button>
-          </div>
-        )}
-      </SpritesheetContainer>
+      </ReactModal>
     </SpriteContainer>
   );
 };
 
 const SpriteContainer = styled.div`
+  border-radius: 10px;
+  border: 1px solid black;
   display: flex;
-  flex-direction: row;
   padding: 12px;
-  padding-left: 0;
+  flex-direction: column;
+  margin-right: 6px;
+  margin-bottom: 6px;
 `;
 
-const SpritesheetContainer = styled.div`
-  margin-left: 24px;
+const Row = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
+  flex-direction: row;
+  padding-right: 12px;
+  padding-left: 12px;
+  align-items: center;
+  border-bottom: 1px dotted black;
+`;
+
+const BorderedIcon = styled(IoMdClose)`
+  border: 1px solid black;
+  border-radius: 100%;
+  padding: 3px;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export default Sprite;
