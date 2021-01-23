@@ -31,15 +31,19 @@ const Sprite = ({
   const [open, setOpen] = useState(false);
 
   const saveSettings = useCallback(async () => {
-    await axios.patch(apiBaseURL + "/updateSettings", {
-      width,
-      height,
-      frames,
-      fps,
-      scale,
-      src,
-      tag,
-    });
+    await axios.patch(
+      apiBaseURL + "/updateSettings",
+      {
+        width,
+        height,
+        frames,
+        fps,
+        scale,
+        src,
+        tag,
+      },
+      { withCredentials: true }
+    );
     setSavedFps(fps);
     setSavedScale(scale);
     setSavedHeight(height);

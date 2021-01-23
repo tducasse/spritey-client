@@ -14,12 +14,16 @@ const Home = () => {
   const [isUploadOpen, setIsUploadOpen] = useState(false);
 
   const fetchTags = useCallback(async () => {
-    const response = await axios.get(apiBaseURL + "/getTags");
+    const response = await axios.get(apiBaseURL + "/getTags", {
+      withCredentials: true,
+    });
     setTags(response.data.data.Items.map((el) => el.tag));
   }, []);
 
   const fetchChallenge = useCallback(async () => {
-    const response = await axios.get(apiBaseURL + "/getChallenges");
+    const response = await axios.get(apiBaseURL + "/getChallenges", {
+      withCredentials: true,
+    });
     setChallenge(response.data.data.Items[0]);
   }, []);
 

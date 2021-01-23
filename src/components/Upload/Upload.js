@@ -48,20 +48,24 @@ const Upload = ({ challenge }) => {
       const name = file.name;
       const type = "image/png";
       axios
-        .post(apiBaseURL + "/requestUploadURL", {
-          name,
-          type,
-          tag,
-        })
+        .post(
+          apiBaseURL + "/requestUploadURL",
+          {
+            name,
+            type,
+            tag,
+          },
+          { withCredentials: true }
+        )
         .then((response) => {
           const signedRequest = response.data.uploadURL;
-          const options = {
-            headers: {
-              "Content-Type": type,
-            },
-          };
           axios
-            .put(signedRequest, file, options)
+            .put(signedRequest, file, {
+              headers: {
+                "Content-Type": type,
+              },
+              withCredentials: true,
+            })
             .then(() => setCurrentUpload(signedRequest.split("?")[0]));
           return false;
         });

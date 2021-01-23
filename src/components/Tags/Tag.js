@@ -10,7 +10,9 @@ const Tag = ({ tag }) => {
   const [images, setImages] = useState([]);
 
   const fetchSprites = useCallback(async () => {
-    const response = await axios.get(apiBaseURL + "/getSprites/" + tag);
+    const response = await axios.get(apiBaseURL + "/getSprites/" + tag, {
+      withCredentials: true,
+    });
     setImages(response.data.data.Items);
   }, [tag]);
 
