@@ -14,12 +14,12 @@ const Home = () => {
 
   const fetchTags = useCallback(async () => {
     const response = await API.get("spritey", "/getTags");
-    setTags(response.data.data.Items.map((el) => el.tag));
+    setTags(response.data.Items.map((el) => el.tag));
   }, []);
 
   const fetchChallenge = useCallback(async () => {
     const response = await API.get("spritey", "/getChallenges");
-    setChallenge(response.data.data.Items[0]);
+    setChallenge(response.data.Items[0]);
   }, []);
 
   useEffect(() => {

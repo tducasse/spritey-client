@@ -10,7 +10,7 @@ const Tag = ({ tag }) => {
 
   const fetchSprites = useCallback(async () => {
     const response = await API.get("spritey", "/getSprites/" + tag);
-    setImages(response.data.data.Items);
+    setImages(response.data.Items);
   }, [tag]);
 
   useEffect(() => {
