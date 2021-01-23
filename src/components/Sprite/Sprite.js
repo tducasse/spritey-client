@@ -87,36 +87,38 @@ const Sprite = ({
           <h2>Settings</h2>
           <BorderedIcon onClick={toggleOpen} />
         </Row>
-        <Settings
-          setHeight={setHeight}
-          height={height}
-          setWidth={setWidth}
-          width={width}
-          frames={frames}
-          setFrames={setFrames}
-          setFps={setFps}
-          fps={fps}
-          scale={scale}
-          setScale={setScale}
-          setDirty={() => setDirty(true)}
-          isDirty={isDirty}
-          saveSettings={saveSettings}
-        />
-        <Spritesheet
-          style={{
-            height: height * scale,
-            width: width * scale,
-            imageRendering: "pixelated",
-          }}
-          key={`${frames}-${height}-${width}-${fps}-${scale}`}
-          image={src}
-          heightFrame={height}
-          widthFrame={width}
-          steps={frames}
-          fps={fps}
-          autoplay
-          loop
-        />
+        <FlexRow>
+          <Settings
+            setHeight={setHeight}
+            height={height}
+            setWidth={setWidth}
+            width={width}
+            frames={frames}
+            setFrames={setFrames}
+            setFps={setFps}
+            fps={fps}
+            scale={scale}
+            setScale={setScale}
+            setDirty={() => setDirty(true)}
+            isDirty={isDirty}
+            saveSettings={saveSettings}
+          />
+          <Spritesheet
+            style={{
+              height: height * scale,
+              width: width * scale,
+              imageRendering: "pixelated",
+            }}
+            key={`${frames}-${height}-${width}-${fps}-${scale}`}
+            image={src}
+            heightFrame={height}
+            widthFrame={width}
+            steps={frames}
+            fps={fps}
+            autoplay
+            loop
+          />
+        </FlexRow>
       </ReactModal>
     </SpriteContainer>
   );
@@ -140,6 +142,13 @@ const Row = styled.div`
   padding-left: 12px;
   align-items: center;
   border-bottom: 1px dotted black;
+`;
+
+const FlexRow = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 const BorderedIcon = styled(IoMdClose)`
