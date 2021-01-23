@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Pages from "./Pages";
-import { BrowserRouter as Router, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AppContext } from "./utils/context";
 import { Auth } from "aws-amplify";
-import LoginButton from "./components/LoginButton";
+import LogoutButton from "./components/LogoutButton";
 
 const App = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(true);
@@ -33,14 +33,14 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <LoginButton isLoggedIn={isLoggedIn} logout={logout} />
+    <>
+      <LogoutButton isLoggedIn={isLoggedIn} logout={logout} />
       {!isLoggingIn && (
         <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
           <Pages />
         </AppContext.Provider>
       )}
-    </Router>
+    </>
   );
 };
 

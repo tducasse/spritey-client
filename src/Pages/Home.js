@@ -4,6 +4,7 @@ import Tags from "../components/Tags";
 import { apiBaseURL } from "../utils/constants";
 import axios from "axios";
 import Challenge from "../components/Challenge/Challenge";
+import styled from "styled-components";
 
 const Home = () => {
   const [tags, setTags] = useState([]);
@@ -25,7 +26,7 @@ const Home = () => {
   }, [fetchTags, fetchChallenge]);
 
   return (
-    <div style={{ padding: 12 }}>
+    <Container>
       <Challenge challenge={challenge} />
       <details open>
         <summary>Upload a spritesheet</summary>
@@ -35,8 +36,12 @@ const Home = () => {
         <summary>Previous challenges</summary>
         <Tags tags={tags} />
       </details>
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 12px;
+`;
 
 export default Home;

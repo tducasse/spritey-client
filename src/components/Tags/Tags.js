@@ -1,14 +1,21 @@
 import React from "react";
+import styled from "styled-components";
 import Tag from "./Tag";
 
 const Tags = ({ tags }) => {
   return (
-    <div style={{ padding: 12, flexDirection: "column", display: "flex" }}>
+    <TagsContainer>
       {(tags || []).map((tag) => (
         <Tag key={tag} tag={tag} />
       ))}
-    </div>
+    </TagsContainer>
   );
 };
+
+const TagsContainer = styled.div`
+  padding: 12px;
+  flex-direction: column;
+  display: flex;
+`;
 
 export default Tags;

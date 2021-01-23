@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { apiBaseURL } from "../../utils/constants";
 import Sprite from "../Sprite";
+import styled from "styled-components";
 
 const Tag = ({ tag }) => {
   const [open, setOpen] = useState(false);
@@ -19,14 +20,20 @@ const Tag = ({ tag }) => {
   return (
     <div>
       <button onClick={() => setOpen(true)}>{tag}</button>
-      <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+      <SpritesContainer>
         {open &&
           (images || []).map((image) => (
             <Sprite key={image.s3_path} {...image} tag={tag} />
           ))}
-      </div>
+      </SpritesContainer>
     </div>
   );
 };
+
+const SpritesContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
 
 export default Tag;

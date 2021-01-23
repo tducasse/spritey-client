@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import SettingsItem from "./SettingsItem";
 
 const Settings = ({
@@ -22,20 +23,20 @@ const Settings = ({
     [setScale, scale, "Scale"],
   ];
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        padding: 12,
-        border: "1px solid black",
-        borderRadius: 10,
-      }}
-    >
+    <SettingsContainer>
       {settings.map((setting) => (
         <SettingsItem key={setting[2]} setting={setting} setDirty={setDirty} />
       ))}
-    </div>
+    </SettingsContainer>
   );
 };
+
+const SettingsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border: 1px solid black;
+  border-radius: 10px;
+`;
 
 export default Settings;

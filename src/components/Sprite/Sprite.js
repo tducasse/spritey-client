@@ -3,6 +3,7 @@ import Spritesheet from "react-responsive-spritesheet";
 import Settings from "./Settings/Settings";
 import axios from "axios";
 import { apiBaseURL } from "../../utils/constants";
+import styled from "styled-components";
 
 const Sprite = ({
   width: initWidth,
@@ -51,14 +52,7 @@ const Sprite = ({
       fps !== savedFps);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        padding: 12,
-        paddingLeft: 0,
-      }}
-    >
+    <SpriteContainer>
       <Settings
         setHeight={setHeight}
         height={height}
@@ -72,14 +66,7 @@ const Sprite = ({
         setScale={setScale}
         setDirty={() => setDirty(true)}
       />
-      <div
-        style={{
-          marginLeft: 24,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-      >
+      <SpritesheetContainer>
         <Spritesheet
           style={{
             height: height * scale,
@@ -100,9 +87,23 @@ const Sprite = ({
             <button onClick={saveSettings}>Save</button>
           </div>
         )}
-      </div>
-    </div>
+      </SpritesheetContainer>
+    </SpriteContainer>
   );
 };
+
+const SpriteContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 12px;
+  padding-left: 0;
+`;
+
+const SpritesheetContainer = styled.div`
+  margin-left: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 export default Sprite;
