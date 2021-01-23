@@ -102,6 +102,21 @@ const Sprite = ({
           isDirty={isDirty}
           saveSettings={saveSettings}
         />
+        <Spritesheet
+          style={{
+            height: height * scale,
+            width: width * scale,
+            imageRendering: "pixelated",
+          }}
+          key={`${frames}-${height}-${width}-${fps}-${scale}`}
+          image={src}
+          heightFrame={height}
+          widthFrame={width}
+          steps={frames}
+          fps={fps}
+          autoplay
+          loop
+        />
       </ReactModal>
     </SpriteContainer>
   );
