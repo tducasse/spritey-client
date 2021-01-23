@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import axios from "axios";
-import { apiBaseURL } from "../../utils/constants";
 import Sprite from "../Sprite";
+import { API } from "aws-amplify";
 
 const baseStyle = {
   flex: 1,
@@ -47,28 +46,24 @@ const Upload = ({ challenge }) => {
       const file = files[0];
       const name = file.name;
       const type = "image/png";
-      axios
-        .post(
-          apiBaseURL + "/requestUploadURL",
-          {
-            name,
-            type,
-            tag,
+      API.post(
+        "spritey",
+        "/requestUploadURL",
+        {
+          name,
+          type,
+          tag,
+        },
+        { withCredentials: true }
+      ).then((response) => {
+        const signedRequest = response.data.uploadURL;
+        API.put("spritey", signedRequest, file, {
+          headers: {
+            "Content-Type": type,
           },
-          { withCredentials: true }
-        )
-        .then((response) => {
-          const signedRequest = response.data.uploadURL;
-          axios
-            .put(signedRequest, file, {
-              headers: {
-                "Content-Type": type,
-              },
-              withCredentials: true,
-            })
-            .then(() => setCurrentUpload(signedRequest.split("?")[0]));
-          return false;
-        });
+        }).then(() => setCurrentUpload(signedRequest.split("?")[0]));
+        return false;
+      });
     },
     [tag]
   );

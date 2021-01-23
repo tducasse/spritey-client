@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import axios from "axios";
-import { apiBaseURL } from "../../utils/constants";
+import { API } from "aws-amplify";
 import Sprite from "../Sprite";
 import styled from "styled-components";
 import { IoMdCube } from "react-icons/io";
@@ -10,9 +9,7 @@ const Tag = ({ tag }) => {
   const [images, setImages] = useState([]);
 
   const fetchSprites = useCallback(async () => {
-    const response = await axios.get(apiBaseURL + "/getSprites/" + tag, {
-      withCredentials: true,
-    });
+    const response = await API.get("spritey", "/getSprites/" + tag);
     setImages(response.data.data.Items);
   }, [tag]);
 

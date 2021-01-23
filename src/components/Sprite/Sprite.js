@@ -1,8 +1,7 @@
 import React, { useCallback, useState } from "react";
 import Spritesheet from "react-responsive-spritesheet";
 import Settings from "./Settings/Settings";
-import axios from "axios";
-import { apiBaseURL } from "../../utils/constants";
+import { API } from "aws-amplify";
 import styled from "styled-components";
 import { VscSettingsGear } from "react-icons/vsc";
 import ReactModal from "react-modal";
@@ -31,9 +30,8 @@ const Sprite = ({
   const [open, setOpen] = useState(false);
 
   const saveSettings = useCallback(async () => {
-    await axios.patch(
-      apiBaseURL + "/updateSettings",
-      {
+    await API.patch("spritey", "/updateSettings", {
+      body: {
         width,
         height,
         frames,
@@ -42,8 +40,7 @@ const Sprite = ({
         src,
         tag,
       },
-      { withCredentials: true }
-    );
+    });
     setSavedFps(fps);
     setSavedScale(scale);
     setSavedHeight(height);

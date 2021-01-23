@@ -2,11 +2,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import Upload from "../components/Upload";
 import PreviousChallenges from "../components/PreviousChallenges";
-import { apiBaseURL } from "../utils/constants";
-import axios from "axios";
 import Challenge from "../components/Challenge/Challenge";
 import styled from "styled-components";
 import { IoMdClose } from "react-icons/io";
+import { API } from "aws-amplify";
 
 const Home = () => {
   const [tags, setTags] = useState([]);
@@ -14,16 +13,12 @@ const Home = () => {
   const [isUploadOpen, setIsUploadOpen] = useState(false);
 
   const fetchTags = useCallback(async () => {
-    const response = await axios.get(apiBaseURL + "/getTags", {
-      withCredentials: true,
-    });
+    const response = await API.get("spritey", "/getTags");
     setTags(response.data.data.Items.map((el) => el.tag));
   }, []);
 
   const fetchChallenge = useCallback(async () => {
-    const response = await axios.get(apiBaseURL + "/getChallenges", {
-      withCredentials: true,
-    });
+    const response = await API.get("spritey", "/getChallenges");
     setChallenge(response.data.data.Items[0]);
   }, []);
 
