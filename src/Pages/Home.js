@@ -4,7 +4,6 @@ import Tags from "../components/Tags";
 import { apiBaseURL } from "../utils/constants";
 import axios from "axios";
 import Challenge from "../components/Challenge/Challenge";
-import LoginButton from "../components/LoginButton";
 
 const Home = () => {
   const [tags, setTags] = useState([]);
@@ -27,9 +26,6 @@ const Home = () => {
 
   return (
     <div style={{ padding: 12 }}>
-      <div style={{ float: "right" }}>
-        <LoginButton />
-      </div>
       <Challenge challenge={challenge} />
       <details open>
         <summary>Upload a spritesheet</summary>
