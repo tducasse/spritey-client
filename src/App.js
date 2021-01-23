@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { AppContext } from "./utils/context";
 import { Auth } from "aws-amplify";
 import Nav from "./components/Nav";
+import Spinner from "./components/Spinner";
 
 const App = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(true);
@@ -35,7 +36,9 @@ const App = () => {
   return (
     <>
       <Nav isLoggedIn={isLoggedIn} logout={logout} />
-      {!isLoggingIn && (
+      {isLoggingIn ? (
+        <Spinner />
+      ) : (
         <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
           <Pages />
         </AppContext.Provider>

@@ -3,6 +3,7 @@ import { API } from "aws-amplify";
 import Sprite from "../Sprite";
 import styled from "styled-components";
 import { IoMdCube } from "react-icons/io";
+import Spinner from "../Spinner";
 
 const Tag = ({ tag }) => {
   const [open, setOpen] = useState(false);
@@ -30,8 +31,12 @@ const Tag = ({ tag }) => {
       </RowH3>
       <SpritesContainer>
         {open &&
-          (images || []).map((image) => (
-            <Sprite key={image.s3_path} {...image} tag={tag} />
+          (images && images.length ? (
+            images.map((image) => (
+              <Sprite key={image.s3_path} {...image} tag={tag} />
+            ))
+          ) : (
+            <Spinner />
           ))}
       </SpritesContainer>
     </>

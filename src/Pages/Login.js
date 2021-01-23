@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { useAppContext } from "../utils/context";
+import Spinner from "../components/Spinner";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -39,7 +40,9 @@ const Login = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button disabled={!validateForm()}>{isLoading ? "..." : "Log in"}</button>
+      <button disabled={!validateForm()}>
+        {isLoading ? <Spinner /> : "Log in"}
+      </button>
     </form>
   );
 };
