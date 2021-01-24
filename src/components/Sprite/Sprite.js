@@ -4,7 +4,7 @@ import Settings from "./Settings/Settings";
 import { API } from "aws-amplify";
 import styled from "styled-components";
 import { VscSettingsGear } from "react-icons/vsc";
-import ReactModal from "react-modal";
+import Modal from "react-modal";
 import { IoMdClose } from "react-icons/io";
 
 const Sprite = ({
@@ -56,7 +56,7 @@ const Sprite = ({
       scale !== savedScale ||
       fps !== savedFps);
 
-  ReactModal.setAppElement("#root");
+  Modal.setAppElement("#root");
 
   const toggleOpen = () => setOpen(!open);
 
@@ -78,11 +78,7 @@ const Sprite = ({
         loop
       />
       <VscSettingsGear onClick={toggleOpen} />
-      <ReactModal
-        isOpen={open}
-        contentLabel="Settings"
-        onRequestClose={toggleOpen}
-      >
+      <Modal isOpen={open} contentLabel="Settings" onRequestClose={toggleOpen}>
         <Row>
           <h2>Settings</h2>
           <BorderedIcon onClick={toggleOpen} />
@@ -119,7 +115,7 @@ const Sprite = ({
             loop
           />
         </FlexRow>
-      </ReactModal>
+      </Modal>
     </SpriteContainer>
   );
 };

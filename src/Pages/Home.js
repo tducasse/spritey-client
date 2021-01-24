@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import ReactModal from "react-modal";
+import Modal from "react-modal";
 import Upload from "../components/Upload";
 import PreviousChallenges from "../components/PreviousChallenges";
 import Challenge from "../components/Challenge/Challenge";
@@ -32,7 +32,7 @@ const Home = () => {
   return (
     <>
       <Challenge challenge={challenge} toggleUpload={toggleUpload} />
-      <ReactModal
+      <Modal
         isOpen={isUploadOpen}
         onRequestClose={toggleUpload}
         contentLabel="Upload a spritesheet"
@@ -42,7 +42,7 @@ const Home = () => {
           <BorderedIcon onClick={toggleUpload} />
         </Row>
         <Upload challenge={challenge} />
-      </ReactModal>
+      </Modal>
       <PreviousChallenges tags={tags} />
     </>
   );
