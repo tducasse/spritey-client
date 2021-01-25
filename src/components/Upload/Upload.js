@@ -54,7 +54,7 @@ const Upload = ({ challenge }) => {
           tag,
         },
       }).then((response) => {
-        const signedRequest = response.data.uploadURL;
+        const signedRequest = response.uploadURL;
         axios
           .put(signedRequest, file, { headers: { "Content-Type": type } })
           .then(() => setCurrentUpload(signedRequest.split("?")[0]));
