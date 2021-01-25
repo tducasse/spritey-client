@@ -6,4 +6,4 @@ Frontend for Spritey, the spritesheet challenge repository.
 
 Built using React.
 
-See [here](https://github.com/tducasse/spritey-client) for the frontend.
+See [here](https://github.com/tducasse/spritey) for the backend.
