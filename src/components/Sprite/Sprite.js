@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from "react";
-import Spritesheet from "react-responsive-spritesheet";
-import Settings from "./Settings/Settings";
 import { API } from "aws-amplify";
-import styled from "styled-components";
+import React, { useState } from "react";
+import { IoMdClose } from "react-icons/io";
 import { VscSettingsGear } from "react-icons/vsc";
 import Modal from "react-modal";
-import { IoMdClose } from "react-icons/io";
+import Spritesheet from "react-responsive-spritesheet";
+import styled from "styled-components";
+import Settings from "./Settings/Settings";
 
 const Sprite = ({
   width: initWidth,
@@ -29,7 +29,7 @@ const Sprite = ({
   const [dirty, setDirty] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const saveSettings = useCallback(async () => {
+  const saveSettings = async () => {
     await API.patch("spritey", "/updateSettings", {
       body: {
         width,
@@ -46,7 +46,7 @@ const Sprite = ({
     setSavedHeight(height);
     setSavedWidth(width);
     setSavedFrames(frames);
-  }, [width, height, frames, fps, scale, src, tag]);
+  };
 
   const isDirty =
     dirty &&

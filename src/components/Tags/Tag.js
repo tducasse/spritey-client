@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { API } from "aws-amplify";
 import Sprite from "../Sprite";
 import styled from "styled-components";
@@ -9,16 +9,15 @@ const Tag = ({ tag }) => {
   const [open, setOpen] = useState(false);
   const [images, setImages] = useState([]);
 
-  const fetchSprites = useCallback(async () => {
-    const response = await API.get("spritey", "/getSprites/" + tag);
-    setImages(response.data.Items);
-  }, [tag]);
-
   useEffect(() => {
     if (open) {
+      const fetchSprites = async () => {
+        const response = await API.get("spritey", "/getSprites/" + tag);
+        setImages(response.data.Items);
+      };
       fetchSprites();
     }
-  }, [open, fetchSprites]);
+  }, [open, tag]);
 
   const toggleOpen = () => setOpen(!open);
 

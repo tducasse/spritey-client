@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Sprite from "../Sprite";
 import { API } from "aws-amplify";
@@ -42,27 +42,22 @@ const Upload = ({ challenge }) => {
     }
   }, [challenge]);
 
-  const onDrop = useCallback(
-    (files) => {
-      const file = files[0];
-      const name = file.name;
-      const type = "image/png";
-      API.post("spritey", "/requestUploadURL", {
-        body: {
-          name,
-          type,
-          tag,
-        },
-      }).then((response) => {
-        const signedRequest = response.uploadURL;
-        axios
-          .put(signedRequest, file, { headers: { "Content-Type": type } })
-          .then(() => setCurrentUpload(signedRequest.split("?")[0]));
-        return false;
-      });
-    },
-    [tag]
-  );
+  const onDrop = async (files) => {
+    const file = files[0];
+    const name = file.name;
+    const type = "image/png";
+    const response = await API.post("spritey", "/requestUploadURL", {
+      body: {
+        name,
+        type,
+        tag,
+      },
+    });
+    const signedRequest = response.uploadURL;
+    await axios.put(signedRequest, file, { headers: { "Content-Type": type } });
+    setCurrentUpload(signedRequest.split("?")[0]);
+    return false;
+  };
 
   const {
     getRootProps,

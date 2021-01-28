@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import Upload from "../components/Upload";
 import PreviousChallenges from "../components/PreviousChallenges";
@@ -12,20 +12,20 @@ const Home = () => {
   const [challenge, setChallenge] = useState(null);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
 
-  const fetchTags = useCallback(async () => {
-    const response = await API.get("spritey", "/getTags");
-    setTags(response.data.Items.map((el) => el.tag));
-  }, []);
-
-  const fetchChallenge = useCallback(async () => {
-    const response = await API.get("spritey", "/getChallenges");
-    setChallenge(response.data.Items[0]);
-  }, []);
-
   useEffect(() => {
+    const fetchTags = async () => {
+      const response = await API.get("spritey", "/getTags");
+      setTags(response.data.Items.map((el) => el.tag));
+    };
+
+    const fetchChallenge = async () => {
+      const response = await API.get("spritey", "/getChallenges");
+      setChallenge(response.data.Items[0]);
+    };
+
     fetchChallenge();
     fetchTags();
-  }, [fetchTags, fetchChallenge]);
+  }, []);
 
   const toggleUpload = () => setIsUploadOpen(!isUploadOpen);
 
