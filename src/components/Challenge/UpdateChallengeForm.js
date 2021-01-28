@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
-import React from "react";
+import React, { useState } from "react";
+import Spinner from "../Spinner";
 
 const UpdateChallengeForm = ({
   setTimestamp,
@@ -8,9 +9,13 @@ const UpdateChallengeForm = ({
   timestamp,
   onSubmit,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     await onSubmit();
+    setIsLoading(false);
   };
 
   const validateForm = () => {
@@ -25,6 +30,7 @@ const UpdateChallengeForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
+      <span>Just letters, no spaces, special characters, etc</span>
       <label htmlFor="name">Name</label>
       <input
         type="text"
@@ -42,7 +48,9 @@ const UpdateChallengeForm = ({
         value={timestamp}
         onChange={(e) => setTimestamp(e.target.value)}
       />
-      <button disabled={!validateForm()}>Update</button>
+      <button disabled={!validateForm()}>
+        {isLoading ? <Spinner /> : "Update"}
+      </button>
     </form>
   );
 };

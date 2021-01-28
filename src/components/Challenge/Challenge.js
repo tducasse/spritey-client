@@ -16,7 +16,7 @@ dayjs.extend(duration);
 const roundTime = (timestamp = +new Date(), hours = 23, minutes = 59) =>
   Math.floor(+new Date(timestamp + 172800000).setHours(hours, minutes) / 1000);
 
-const Challenge = ({ challenge, toggleUpload }) => {
+const Challenge = ({ challenge, toggleUpload, setChallenge }) => {
   const [timestamp, setTimestamp] = useState(roundTime());
   const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
@@ -26,11 +26,13 @@ const Challenge = ({ challenge, toggleUpload }) => {
     await API.post("spritey", "/updateChallenge", {
       body: {
         name,
-        timestamp,
-        oldChallengeDate: challenge.end_date,
+        end_date: "" + timestamp,
+        oldName: challenge.name,
+        oldDate: "" + challenge.end_date,
       },
     });
     setOpen(false);
+    setChallenge({ name, end_date: timestamp });
   };
 
   useEffect(() => {

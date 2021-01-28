@@ -31,7 +31,11 @@ const Home = () => {
 
   return (
     <>
-      <Challenge challenge={challenge} toggleUpload={toggleUpload} />
+      <Challenge
+        challenge={challenge}
+        toggleUpload={toggleUpload}
+        setChallenge={setChallenge}
+      />
       <Modal
         isOpen={isUploadOpen}
         onRequestClose={toggleUpload}
